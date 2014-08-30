@@ -1,0 +1,177 @@
+08/30/2014 07:37:53 PM INFO: Reading notebook Historical Database.ipynb
+08/30/2014 07:37:53 PM INFO: Running cell:
+%pylab inline
+
+import datetime as dt
+import os
+
+import pandas as pd
+from pandas.io.data import Options
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+outputDirectory = os.environ.get('OUTPUTDIRECTORY', -1)
+
+if outputDirectory == -1:
+    stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    outputDirectory = 'data/'+stamp
+    
+    print("Warning: Output directory was not retrievable")
+
+if not os.path.exists(outputDirectory):
+    os.makedirs(outputDirectory)
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+tickers = pd.read_csv('ticker_list.csv')
+tickerList = tickers['ticker'].values
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+for i in range(len(tickerList)):
+
+    option = Options(tickerList[i], 'yahoo')
+    
+    try:
+        data = option.get_all_data()
+    except:
+        print('Warning: Unable to load '+tickerList[i])
+        # Include a "retry" in the next cell
+    else:
+        filename = outputDirectory+'/'+tickerList[i]+'.csv'
+        data[['Last', 'Vol']].to_csv(filename)
+
+08/30/2014 07:50:52 PM INFO: Cell returned
+08/30/2014 07:50:52 PM INFO: Running cell:
+# Loop through the failed downloads a few times giving them a chance to work
+
+08/30/2014 07:50:52 PM INFO: Cell returned
+08/30/2014 07:50:52 PM INFO: Running cell:
+os.system('git add '+outputDirectory)
+os.system('git commit -m "Uploading '+outputDirectory+'"')
+os.system('git push')
+
+[master bad3a5a] Uploading data/20140830_193752
+ 96 files changed, 55384 insertions(+)
+ create mode 100644 data/20140830_193752/AAL.csv
+ create mode 100644 data/20140830_193752/AAPL.csv
+ create mode 100644 data/20140830_193752/AIG.csv
+ create mode 100644 data/20140830_193752/AMAT.csv
+ create mode 100644 data/20140830_193752/AMD.csv
+ create mode 100644 data/20140830_193752/AMZN.csv
+ create mode 100644 data/20140830_193752/BA.csv
+ create mode 100644 data/20140830_193752/BAC.csv
+ create mode 100644 data/20140830_193752/BBRY.csv
+ create mode 100644 data/20140830_193752/BIDU.csv
+ create mode 100644 data/20140830_193752/BP.csv
+ create mode 100644 data/20140830_193752/BX.csv
+ create mode 100644 data/20140830_193752/C.csv
+ create mode 100644 data/20140830_193752/CLF.csv
+ create mode 100644 data/20140830_193752/CMCSA.csv
+ create mode 100644 data/20140830_193752/CMG.csv
+ create mode 100644 data/20140830_193752/CSCO.csv
+ create mode 100644 data/20140830_193752/DAL.csv
+ create mode 100644 data/20140830_193752/DD.csv
+ create mode 100644 data/20140830_193752/DDD.csv
+ create mode 100644 data/20140830_193752/DHI.csv
+ create mode 100644 data/20140830_193752/DIA.csv
+ create mode 100644 data/20140830_193752/EBAY.csv
+ create mode 100644 data/20140830_193752/EEM.csv
+ create mode 100644 data/20140830_193752/EFA.csv
+ create mode 100644 data/20140830_193752/EMC.csv
+ create mode 100644 data/20140830_193752/EPB.csv
+ create mode 100644 data/20140830_193752/EWZ.csv
+ create mode 100644 data/20140830_193752/F.csv
+ create mode 100644 data/20140830_193752/FB.csv
+ create mode 100644 data/20140830_193752/FXI.csv
+ create mode 100644 data/20140830_193752/GDX.csv
+ create mode 100644 data/20140830_193752/GE.csv
+ create mode 100644 data/20140830_193752/GILD.csv
+ create mode 100644 data/20140830_193752/GLD.csv
+ create mode 100644 data/20140830_193752/GM.csv
+ create mode 100644 data/20140830_193752/GRPN.csv
+ create mode 100644 data/20140830_193752/GT.csv
+ create mode 100644 data/20140830_193752/HD.csv
+ create mode 100644 data/20140830_193752/HLF.csv
+ create mode 100644 data/20140830_193752/HYG.csv
+ create mode 100644 data/20140830_193752/INTC.csv
+ create mode 100644 data/20140830_193752/IWM.csv
+ create mode 100644 data/20140830_193752/IYR.csv
+ create mode 100644 data/20140830_193752/JCP.csv
+ create mode 100644 data/20140830_193752/JNJ.csv
+ create mode 100644 data/20140830_193752/JPM.csv
+ create mode 100644 data/20140830_193752/LNG.csv
+ create mode 100644 data/20140830_193752/LNKD.csv
+ create mode 100644 data/20140830_193752/MCD.csv
+ create mode 100644 data/20140830_193752/MGM.csv
+ create mode 100644 data/20140830_193752/MNKD.csv
+ create mode 100644 data/20140830_193752/MSFT.csv
+ create mode 100644 data/20140830_193752/MU.csv
+ create mode 100644 data/20140830_193752/MWE.csv
+ create mode 100644 data/20140830_193752/NFLX.csv
+ create mode 100644 data/20140830_193752/NQ.csv
+ create mode 100644 data/20140830_193752/NVDA.csv
+ create mode 100644 data/20140830_193752/OXY.csv
+ create mode 100644 data/20140830_193752/P.csv
+ create mode 100644 data/20140830_193752/PBR.csv
+ create mode 100644 data/20140830_193752/PFE.csv
+ create mode 100644 data/20140830_193752/PLUG.csv
+ create mode 100644 data/20140830_193752/QCOM.csv
+ create mode 100644 data/20140830_193752/QQQ.csv
+ create mode 100644 data/20140830_193752/SCTY.csv
+ create mode 100644 data/20140830_193752/SLV.csv
+ create mode 100644 data/20140830_193752/SPY.csv
+ create mode 100644 data/20140830_193752/T.csv
+ create mode 100644 data/20140830_193752/TBT.csv
+ create mode 100644 data/20140830_193752/TEVA.csv
+ create mode 100644 data/20140830_193752/TLT.csv
+ create mode 100644 data/20140830_193752/TMUS.csv
+ create mode 100644 data/20140830_193752/TSLA.csv
+ create mode 100644 data/20140830_193752/TWTR.csv
+ create mode 100644 data/20140830_193752/UAL.csv
+ create mode 100644 data/20140830_193752/USO.csv
+ create mode 100644 data/20140830_193752/UVXY.csv
+ create mode 100644 data/20140830_193752/VALE.csv
+ create mode 100644 data/20140830_193752/VXX.csv
+ create mode 100644 data/20140830_193752/VZ.csv
+ create mode 100644 data/20140830_193752/WAG.csv
+ create mode 100644 data/20140830_193752/WFC.csv
+ create mode 100644 data/20140830_193752/WFM.csv
+ create mode 100644 data/20140830_193752/WLT.csv
+ create mode 100644 data/20140830_193752/WMB.csv
+ create mode 100644 data/20140830_193752/XLE.csv
+ create mode 100644 data/20140830_193752/XLF.csv
+ create mode 100644 data/20140830_193752/XLU.csv
+ create mode 100644 data/20140830_193752/XOM.csv
+ create mode 100644 data/20140830_193752/XOP.csv
+ create mode 100644 data/20140830_193752/XRT.csv
+ create mode 100644 data/20140830_193752/YELP.csv
+ create mode 100644 data/20140830_193752/YHOO.csv
+ create mode 100644 data/20140830_193752/ZNGA.csv
+ create mode 100644 data/20140830_193752/runipy_log
+warning: push.default is unset; its implicit value is changing in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the current behavior after the default changes, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+In Git 2.0, Git will default to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+To git@github.com:SimonBiggs/Historical-Options-Database.git
+   add73b5..bad3a5a  master -> master
+08/30/2014 07:51:01 PM INFO: Cell returned
+08/30/2014 07:51:01 PM INFO: Saving HTML snapshot to data/20140830_193752/report.html
+08/30/2014 07:51:01 PM INFO: Loaded template full.tpl

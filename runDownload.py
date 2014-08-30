@@ -11,4 +11,4 @@ if not os.path.exists(outputDirectory):
     os.makedirs(outputDirectory)
 
 os.environ["OUTPUTDIRECTORY"] = outputDirectory
-os.system("nohup runipy Historical\ Database.ipynb  --html "+outputDirectory+"/report.html > "+outputDirectory+"/runipy_log &")
+os.system("nohup runipy Historical\ Database.ipynb  --html "+outputDirectory+"/00_report.html > "+outputDirectory+"/00_runipy_log &")
