@@ -1,0 +1,53 @@
+08/30/2014 07:37:53 PM INFO: Reading notebook Historical Database.ipynb
+08/30/2014 07:37:53 PM INFO: Running cell:
+%pylab inline
+
+import datetime as dt
+import os
+
+import pandas as pd
+from pandas.io.data import Options
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+outputDirectory = os.environ.get('OUTPUTDIRECTORY', -1)
+
+if outputDirectory == -1:
+    stamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    outputDirectory = 'data/'+stamp
+    
+    print("Warning: Output directory was not retrievable")
+
+if not os.path.exists(outputDirectory):
+    os.makedirs(outputDirectory)
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+tickers = pd.read_csv('ticker_list.csv')
+tickerList = tickers['ticker'].values
+
+08/30/2014 07:37:54 PM INFO: Cell returned
+08/30/2014 07:37:54 PM INFO: Running cell:
+for i in range(len(tickerList)):
+
+    option = Options(tickerList[i], 'yahoo')
+    
+    try:
+        data = option.get_all_data()
+    except:
+        print('Warning: Unable to load '+tickerList[i])
+        # Include a "retry" in the next cell
+    else:
+        filename = outputDirectory+'/'+tickerList[i]+'.csv'
+        data[['Last', 'Vol']].to_csv(filename)
+
+08/30/2014 07:50:52 PM INFO: Cell returned
+08/30/2014 07:50:52 PM INFO: Running cell:
+# Loop through the failed downloads a few times giving them a chance to work
+
+08/30/2014 07:50:52 PM INFO: Cell returned
+08/30/2014 07:50:52 PM INFO: Running cell:
+os.system('git add '+outputDirectory)
+os.system('git commit -m "Uploading '+outputDirectory+'"')
+os.system('git push')
+
